@@ -48,7 +48,7 @@ public class HomeController extends Controller {
             session("email", loginForm.user);
             return redirect(routes.HomeController.index());
         } else {
-            return badRequest(login.render(formFactory.form(Login.class)));
+            return redirect(routes.HomeController.login());
         }
     }
 
