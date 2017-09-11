@@ -27,7 +27,7 @@ public class HomeController extends Controller {
     @Inject
     public HomeController(play.data.FormFactory formFactory) {
         this.formFactory = formFactory;
-        this.nominationUploader = new NominationUploader(System.getenv("DFE_HONS_KISSFLOWAPI"), System.getenv("DFE_HONS_KISSFLOWAPI"));
+        this.nominationUploader = new NominationUploader(System.getenv("DFE_HONS_KISSFLOWAPI"), System.getenv("DFE_HONS_FILEAPI"));
     }
 
 
