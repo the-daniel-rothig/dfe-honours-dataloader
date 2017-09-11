@@ -1,0 +1,16 @@
+@(res: List[uk.gov.education.honours.NominationUploader.Result])
+
+@main("Honours Tracker Data Loader") {
+    <p><a href="@routes.HomeController.logout">Log out</a></p>
+    <h2>All done :)</h2>
+
+    @res.size Nominations uploaded.
+    <ul>
+    @for(x <- res) {
+        <li>@x.nominationFileName (and @x.supportDocumentCount supporting documents) <a href="@x.nextStepUri" target="_blank">see record</a></li>
+    }
+    </ul>
+
+    <a href="/">Go home</a>
+
+}

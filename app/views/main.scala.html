@@ -1,0 +1,21 @@
+@(title: String)(content: Html)
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>@title</title>
+        <link rel='stylesheet' media='screen' href='@routes.Assets.versioned("stylesheets/main.css")'>
+        <link rel='shortcut icon' type='image/png' href='@routes.Assets.versioned("images/favicon.png")'>
+        <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
+        <script src='@routes.Assets.versioned("javascripts/hello.js")' type='text/javascript'></script>
+    </head>
+    <body>
+        <div id="header-bar">
+            <h1>
+                Department for Education - Honours Tracker data loader
+            </h1>
+        </div>
+        <div id="content-wrapper">
+        @content
+        </div>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+@(form: Form[controllers.FormData])
+
+@main("Honours Tracker Data Loader") {
+    <p><a href="@routes.HomeController.logout">Log out</a></p>
+    @helper.form(action = routes.HomeController.upload, 'enctype -> "multipart/form-data") {
+        <h2>Upload new nominations here</h2>
+        <p>
+            Upload one or more Cabinet Office Nomination PDFs and supporting files.
+        </p>
+        <p>
+            To manually create a new nomination case for other sources, <a href="https://kf-0000580.appspot.com/">go to the honours tracker directly</a>.
+        </p>
+        @helper.CSRF.formField
+
+        <div class="form-row">
+            <label for="name">Nominations and supporting documents:</label>
+            <input id="name" name="name" multiple="multiple" type="file">
+        </div>
+        <input type="submit" value="Upload files" id="upload-files"/>
+    }
+    @helper.form(action = routes.HomeController.getShortlist, 'method -> "GET") {
+        <h2>Or download the current shortlist</h2>
+        <div class="form-row">
+            <label for="round">Get shortlist for round:</label>
+            <select name="round" id="round">
+                <option value="" selected="selected">All records</option>
+                @for(i <- java.util.Calendar.getInstance().get(Calendar.YEAR)-1 to java.util.Calendar.getInstance().get(Calendar.YEAR)+2) {
+                    <option value="@i NY">@i NY</option>
+                    <option value="@i BD">@i BD</option>
+                }
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="department">Filter to department:</label>
+            <input id="department" name="department" />
+        </div>
+
+        <input type="submit" value="Get Excel spreadsheet">
+    }
+
+
+    @helper.form(action = routes.HomeController.shortlistUpload, 'enctype -> "multipart/form-data") {
+        <h2>Upload a filled-out shortlist here</h2>
+        </p>
+        @helper.CSRF.formField
+
+        <div class="form-row">
+            <label for="name2">Completed shortlist document:</label>
+            <input id="name2" name="name" type="file">
+        </div>
+        <input type="submit" value="Upload files" id="upload-files2"/>
+    }
+    @helper.form(action = routes.HomeController.getFinalShortlist, 'method -> "GET") {
+        <h2>Or download the final shortlist</h2>
+        <div class="form-row">
+            <label for="round2">Get shortlist for round:</label>
+            <select name="round" id="round2">
+                <option value="" selected="selected">All records</option>
+                @for(i <- java.util.Calendar.getInstance().get(Calendar.YEAR)-1 to java.util.Calendar.getInstance().get(Calendar.YEAR)+2) {
+                    <option value="@i NY">@i NY</option>
+                    <option value="@i BD">@i BD</option>
+                }
+            </select>
+        </div>
+
+        <input type="submit" value="Get Excel spreadsheet">
+    }
+}
