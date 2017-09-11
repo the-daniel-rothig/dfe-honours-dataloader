@@ -11,10 +11,7 @@ import views.html.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -68,10 +65,10 @@ public class HomeController extends Controller {
 
         response().setHeader("Content-Disposition", "attachment; filename=shortlist.xlsx");
         XSSFWorkbook xlsx = nominationUploader.getShortlist(department, round);
-        StringOutputStream stringOutputStream = new StringOutputStream();
-        xlsx.write(stringOutputStream);
-        stringOutputStream.flush();
-        return ok(stringOutputStream.toString());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        xlsx.write(outputStream);
+        outputStream.flush();
+        return ok(outputStream.toByteArray());
     }
 
     @Security.Authenticated(Secured.class)
@@ -79,10 +76,10 @@ public class HomeController extends Controller {
         String round = request().queryString().get("round")[0];
         response().setHeader("Content-Disposition", "attachment; filename=shortlist.xlsx");
         XSSFWorkbook xlsx = nominationUploader.getFinalShortlist(round);
-        StringOutputStream stringOutputStream = new StringOutputStream();
-        xlsx.write(stringOutputStream);
-        stringOutputStream.flush();
-        return ok(stringOutputStream.toString());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        xlsx.write(outputStream);
+        outputStream.flush();
+        return ok(outputStream.toByteArray());
     }
 
     /**
