@@ -60,27 +60,37 @@ public class HomeController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result getShortlist() throws IOException, ParseException {
-        File file = new File("shortlist.xlsx");
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
         String round = request().queryString().get("round")[0];
         String department = request().queryString().get("department")[0];
-        XSSFWorkbook xlsx = nominationUploader.getShortlist(department, round);
-        xlsx.write(fileOutputStream);
-        fileOutputStream.close();
+
         response().setHeader("Content-Disposition", "attachment; filename=shortlist.xlsx");
-        return ok(file);
+        XSSFWorkbook xlsx = nominationUploader.getShortlist(department, round);
+        FileOutputStream fileOutputStream = null;
+        try {
+            File file = new File("shortlist.xlsx");
+            fileOutputStream = new FileOutputStream(file);
+            xlsx.write(fileOutputStream);
+            fileOutputStream.close();
+            return ok(file);
+        } finally {
+            if (fileOutputStream != null) fileOutputStream.close();
+        }
     }
 
     @Security.Authenticated(Secured.class)
     public Result getFinalShortlist() throws IOException, ParseException {
-        File file = new File("shortlist.xlsx");
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
         String round = request().queryString().get("round")[0];
-        XSSFWorkbook xlsx = nominationUploader.getFinalShortlist(round);
-        xlsx.write(fileOutputStream);
-        fileOutputStream.close();
         response().setHeader("Content-Disposition", "attachment; filename=shortlist.xlsx");
-        return ok(file);
+        XSSFWorkbook xlsx = nominationUploader.getFinalShortlist(round);
+        FileOutputStream fileOutputStream = null;
+        try {
+            File file = new File("shortlist.xlsx");
+            fileOutputStream = new FileOutputStream(file);
+            xlsx.write(fileOutputStream);
+            return ok(file);
+        } finally {
+            if (fileOutputStream != null) fileOutputStream.close();
+        }
     }
 
     /**
