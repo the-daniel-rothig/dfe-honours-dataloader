@@ -1,6 +1,8 @@
 package controllers;
 
+import akka.http.scaladsl.model.HttpHeader;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.codehaus.plexus.util.StringOutputStream;
 import org.json.simple.parser.ParseException;
 import play.data.Form;
 import play.mvc.*;
@@ -12,6 +14,7 @@ import javax.inject.Singleton;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -65,16 +68,10 @@ public class HomeController extends Controller {
 
         response().setHeader("Content-Disposition", "attachment; filename=shortlist.xlsx");
         XSSFWorkbook xlsx = nominationUploader.getShortlist(department, round);
-        FileOutputStream fileOutputStream = null;
-        try {
-            File file = new File("shortlist.xlsx");
-            fileOutputStream = new FileOutputStream(file);
-            xlsx.write(fileOutputStream);
-            fileOutputStream.close();
-            return ok(file);
-        } finally {
-            if (fileOutputStream != null) fileOutputStream.close();
-        }
+        StringOutputStream stringOutputStream = new StringOutputStream();
+        xlsx.write(stringOutputStream);
+        stringOutputStream.flush();
+        return ok(stringOutputStream.toString());
     }
 
     @Security.Authenticated(Secured.class)
@@ -82,15 +79,10 @@ public class HomeController extends Controller {
         String round = request().queryString().get("round")[0];
         response().setHeader("Content-Disposition", "attachment; filename=shortlist.xlsx");
         XSSFWorkbook xlsx = nominationUploader.getFinalShortlist(round);
-        FileOutputStream fileOutputStream = null;
-        try {
-            File file = new File("shortlist.xlsx");
-            fileOutputStream = new FileOutputStream(file);
-            xlsx.write(fileOutputStream);
-            return ok(file);
-        } finally {
-            if (fileOutputStream != null) fileOutputStream.close();
-        }
+        StringOutputStream stringOutputStream = new StringOutputStream();
+        xlsx.write(stringOutputStream);
+        stringOutputStream.flush();
+        return ok(stringOutputStream.toString());
     }
 
     /**
