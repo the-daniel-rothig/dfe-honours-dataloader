@@ -1,4 +1,4 @@
-name := """play-java-fileupload-example"""
+name := """dfe-honours-dataloader"""
 
 version := "1.0-SNAPSHOT"
 
