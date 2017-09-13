@@ -1,0 +1,16 @@
+@()
+
+@main("Honours Tracker Data Loader") {
+    <p><a href="@routes.HomeController.logout">Log out</a></p>
+
+    @helper.form(action = routes.HomeController.getShortlist, 'method -> "GET") {
+        <h2>Download the current directorate shortlist template</h2>
+        <div class="form-row">
+            <label for="department">Filter to department:</label>
+            <input id="department" name="department" />
+        </div>
+
+        <input type="submit" value="Get Excel spreadsheet">
+    }
+    <p><a href="@routes.HomeController.index">Go home</a></p>
+}

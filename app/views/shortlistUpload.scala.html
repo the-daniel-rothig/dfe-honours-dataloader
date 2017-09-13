@@ -1,0 +1,18 @@
+@()
+
+@main("Honours Tracker Data Loader") {
+    <p><a href="@routes.HomeController.logout">Log out</a></p>
+
+    @helper.form(action = routes.HomeController.shortlistUpload, 'enctype -> "multipart/form-data") {
+        <h2><span style="color:#f44b42">CURRENTLY BONED</span> Upload a filled-out shortlist here</h2>
+        @helper.CSRF.formField
+
+        <div class="form-row">
+            <label for="name2">Completed shortlist document:</label>
+            <input id="name2" name="name" type="file">
+        </div>
+        <input type="submit" value="Upload file" id="upload-files2"/>
+    }
+
+    <p><a href="@routes.HomeController.index">Go home</a></p>
+}

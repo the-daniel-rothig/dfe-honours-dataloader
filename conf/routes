@@ -5,11 +5,16 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 GET     /login                      controllers.HomeController.login
+GET     /nomination                 controllers.HomeController.nomination
+GET     /department                 controllers.HomeController.department
+GET     /directorate                controllers.HomeController.directorate
+GET     /shortlist-upload           controllers.HomeController.shortlistUploadPage
+GET     /final                      controllers.HomeController.finalShortlist
 POST    /auth                       controllers.HomeController.auth
 GET     /logout                     controllers.HomeController.logout
 GET     /shortlist                  controllers.HomeController.getShortlist
 POST    /shortlist                  controllers.HomeController.shortlistUpload
-GET     /finalshortlist             controllers.HomeController.getFinalShortlist
+GET     /final-shortlist             controllers.HomeController.getFinalShortlist
 POST    /upload                     controllers.HomeController.upload
 
 # Map static resources from the /public folder to the /assets URL path

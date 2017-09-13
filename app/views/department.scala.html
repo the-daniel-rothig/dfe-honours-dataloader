@@ -1,0 +1,23 @@
+@()
+
+@main("Honours Tracker Data Loader") {
+    <p><a href="@routes.HomeController.logout">Log out</a></p>
+
+
+    @helper.form(action = routes.HomeController.getShortlist, 'method -> "GET") {
+        <h2>Download a departmental shortlist template</h2>
+        <div class="form-row">
+            <label for="round">Get shortlist for round:</label>
+            <select name="round" id="round">
+                <option value="" selected="selected">All records</option>
+                @for(i <- java.util.Calendar.getInstance().get(Calendar.YEAR)-1 to java.util.Calendar.getInstance().get(Calendar.YEAR)+2) {
+                    <option value="@i NY">@i NY</option>
+                    <option value="@i BD">@i BD</option>
+                }
+            </select>
+        </div>
+
+        <input type="submit" value="Get Excel spreadsheet">
+    }
+    <p><a href="@routes.HomeController.index">Go home</a></p>
+}

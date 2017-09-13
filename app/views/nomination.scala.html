@@ -1,0 +1,23 @@
+@(form: Form[controllers.FormData])
+
+@main("Honours Tracker Data Loader") {
+    <p><a href="@routes.HomeController.logout">Log out</a></p>
+
+    @helper.form(action = routes.HomeController.upload, 'enctype -> "multipart/form-data") {
+        <h2>Upload new nominations here</h2>
+        <p>
+            Upload one or more Cabinet Office Nomination PDFs and supporting files.
+        </p>
+        <p>
+            To manually create a new nomination case for other sources, <a href="https://kf-0000580.appspot.com/">go to the honours tracker directly</a>.
+        </p>
+        @helper.CSRF.formField
+
+        <div class="form-row">
+            <label for="name">Nominations and supporting documents:</label>
+            <input id="name" name="name" multiple="multiple" type="file">
+        </div>
+        <input type="submit" value="Upload files" id="upload-files"/>
+    }
+    <p><a href="@routes.HomeController.index">Go home</a></p>
+}

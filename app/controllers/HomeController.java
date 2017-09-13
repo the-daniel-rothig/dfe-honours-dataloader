@@ -31,6 +31,7 @@ public class HomeController extends Controller {
     }
 
 
+
     public Result login() {
         return ok(login.render(formFactory.form(Login.class)));
     }
@@ -54,14 +55,32 @@ public class HomeController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result index() {
-        Form<FormData> form = formFactory.form(FormData.class);
-        return ok(index.render(form));
+        return ok(index.render());
     }
 
     @Security.Authenticated(Secured.class)
+    public Result nomination() {
+        Form<FormData> form = formFactory.form(FormData.class);
+        return ok(nomination.render(form));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result department() { return ok(department.render()); }
+
+    @Security.Authenticated(Secured.class)
+    public Result directorate() { return ok(directorate.render()); }
+
+    @Security.Authenticated(Secured.class)
+    public Result finalShortlist() { return ok(finalShortlist.render()); }
+
+    @Security.Authenticated(Secured.class)
+    public Result shortlistUploadPage() { return ok(shortlistUpload.render()); }
+
+
+    @Security.Authenticated(Secured.class)
     public Result getShortlist() throws IOException, ParseException {
-        String round = request().queryString().get("round")[0];
-        String department = request().queryString().get("department")[0];
+        String round = request().queryString().getOrDefault("round", new String[] {""})[0];
+        String department = request().queryString().getOrDefault("department", new String[] {""})[0];
 
         response().setHeader("Content-Disposition", "attachment; filename=shortlist.xlsx");
         XSSFWorkbook xlsx = nominationUploader.getShortlist(department, round);
